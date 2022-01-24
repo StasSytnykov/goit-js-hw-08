@@ -1,3 +1,5 @@
+const _ = require('lodash');
+
 const iframe = document.querySelector('iframe');
 const player = new Vimeo.Player(iframe);
 const LOCALSTORAGE_KEY = 'videoplayer-current-time';
@@ -14,8 +16,10 @@ const onPlay = function (data) {
   // data is an object containing properties specific to that event
   console.log('onPlay');
   console.log(data);
+
   localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(data));
 };
+
 player.on('timeupdate', onPlay);
 
 const currentTime = localStorage.getItem(LOCALSTORAGE_KEY);
