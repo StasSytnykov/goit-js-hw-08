@@ -11,28 +11,31 @@ feedbackForm.addEventListener('submit', onSubmit);
 
 emailInput.addEventListener('input', event => {
   feedback.email = event.currentTarget.value;
-  
-  console.log(feedback);
   localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(feedback));
 });
 
 textarea.addEventListener('input', event => {
   feedback.message = event.currentTarget.value;
-  console.log(feedback);
   localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(feedback));
 });
 
-// function onCheckLocalStorage() {
-    
-// }
+const savedFeedback = localStorage.getItem(LOCALSTORAGE_KEY);
+const parsedFeddback = JSON.parse(savedFeedback);
 
-// function onSubmit(event) {
-//   event.preventDefault();
+function onUpdateInput() {
+  emailInput.value = parsedFeddback !== null ? parsedFeddback.email : '';
+  textarea.value = parsedFeddback !== null ? parsedFeddback.message : '';
+}
+onUpdateInput();
 
-//   console.log(event.currentTarget.value);
-//   const {
-//     elments: { email, message },
-//   } = event.currentTarget;
-//   console.log(email.value);
-//   event.currentTarget.reset();
-// }
+function onSubmit(event) {
+  event.preventDefault();
+  //   console.log(event.currentTarget.value);
+  const {
+    elements: { email, message },
+  } = event.currentTarget;
+  const currentFeedback = { email: email.value, message: message.value };
+  console.log(currentFeedback);
+  localStorage.clear();
+  event.currentTarget.reset();
+}
