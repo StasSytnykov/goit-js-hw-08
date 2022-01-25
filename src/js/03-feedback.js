@@ -9,14 +9,18 @@ const feedback = { email: '', message: '' };
 
 feedbackForm.addEventListener('submit', onSubmit);
 
+const onSetItemToLocalStorage = _.throttle(function () {
+  localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(feedback));
+}, 1000);
+
 emailInput.addEventListener('input', event => {
   feedback.email = event.currentTarget.value;
-  localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(feedback));
+  onSetItemToLocalStorage();
 });
 
 textarea.addEventListener('input', event => {
   feedback.message = event.currentTarget.value;
-  localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(feedback));
+  onSetItemToLocalStorage();
 });
 
 const savedFeedback = localStorage.getItem(LOCALSTORAGE_KEY);
@@ -30,12 +34,13 @@ onUpdateInput();
 
 function onSubmit(event) {
   event.preventDefault();
-  //   console.log(event.currentTarget.value);
   const {
     elements: { email, message },
   } = event.currentTarget;
+
   const currentFeedback = { email: email.value, message: message.value };
   console.log(currentFeedback);
+
   localStorage.clear();
   event.currentTarget.reset();
 }
