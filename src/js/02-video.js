@@ -12,13 +12,9 @@ player.getVideoTitle().then(function (title) {
   console.log('title:', title);
 });
 
-const onPlay = function (data) {
-  // data is an object containing properties specific to that event
-  console.log('onPlay');
-  console.log(data);
-
+const onPlay = _.throttle(function (data) {
   localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(data));
-};
+}, 1000);
 
 player.on('timeupdate', onPlay);
 
