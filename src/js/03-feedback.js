@@ -11,7 +11,7 @@ feedbackForm.addEventListener('submit', onSubmit);
 
 const onSetItemToLocalStorage = _.throttle(function () {
   localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(feedback));
-}, 1000);
+}, 500);
 
 emailInput.addEventListener('input', event => {
   feedback.email = event.currentTarget.value;
